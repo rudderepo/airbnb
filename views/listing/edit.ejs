@@ -1,0 +1,63 @@
+<% layout('/layout/boilerplate') -%>
+
+    <body>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <h3>Edit:<%=hotel.title%>
+                </h3>
+                <form method="post" novalidate class="needs-validation" enctype="multipart/form-data" action="/listing/edited/<%=hotel._id%>?_method=PATCH">
+                    <div class="mb-3"><label for="title" class="form-label">Title</label>
+                        <input id="title" required type="text" class="form-control" name="listing[title]"
+                            value="<%=hotel.title%>">
+                            <div class="invalid-feedback">please choose your text</div>
+                        <div class="valid-feedback">Looks Good</div>
+                    </div>
+                    <div class="mb-3"><label for="description" class="form-label">Description</label>
+                        <textarea id="description" required name="listing[description]"
+                            class="form-control"><%=hotel.description%></textarea>
+                            <div class="invalid-feedback">please Describe</div>
+                        <div class="valid-feedback">Good Description</div>
+                    </div>
+                    <div class="mb-3">Original listing <br>
+                        <img src="<%=originalphoto%>" alt="Originallisting">
+
+                    </div>
+                    <div class="mb-3"><label for="image" class="form-label">Upload New Image</label>
+                        <input id="image" type="file" class="form-control"
+                            name="listing[image]">
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="mb-3"><label for="price" class="form-label">Price</label>
+                                <input id="price" required type="number" value="<%=hotel.price%>" class="form-control"
+                                    name="listing[price]">
+                                    <div class="invalid-feedback">Set Price</div>
+                                <div class="valid-feedback">Price is Good</div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mb-3"><label for="location" class="form-label">Location</label>
+                                <input id="location" required type="text" value="<%=hotel.location%>" class="form-control"
+                                    name="listing[location]">
+                                    <div class="invalid-feedback">Enter Your Location</div>
+                                <div class="valid-feedback">Location</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3"><label for="country" class="form-label">Country</label>
+                        <input id="country" type="text" required value="<%=hotel.country%>" class="form-control"
+                            name="listing[country]">
+                            <div class="invalid-feedback">please choose your text</div>
+                        <div class="valid-feedback">Country</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger">ADD</button>
+                    <br><br>
+                </form>
+            </div>
+        </div>
+
+
+    </body>

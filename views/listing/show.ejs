@@ -1,0 +1,103 @@
+<% layout('/layout/boilerplate') -%>
+
+    <body>
+        <div class="row mt-3">
+            <div class="col-6 offset-3">
+                <div class="card animate__animated animate__fadeIn" style="width: 100%;">
+                    <img src="<%=hotel.image.url%>" class="card-img-top hotel-img" alt="<%=hotel.title%>">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%=hotel.title%>
+                        </h5>
+                        <p class="card-text">
+                        <i>Posted by:-<%=hotel.owner.username%></i>
+                        <p>
+                            <%=hotel.description%>
+                                <br>
+                                <%=hotel.location%>
+                                    <br>
+                                    <b>&#8377;<%=hotel.price.toLocaleString("en-IN")%></b>/night
+                        </p>
+
+                        </p>
+
+                    </div>
+                    <%if(curruser&&curruser._id.equals(hotel.owner._id)){%> 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a class="btn btn-danger" style="width: 100%;" href="/listing/edit/<%=hotel._id%>">Edit</a>
+                        </div>
+                        <div class="col-md-6 ">
+                            <form method="post" action="/listing/delete/<%=hotel._id%>?_method=DELETE">
+                                <button class="btn btn-dark " style="width: 100%;" type="submit">DELETE</button>
+                            </form>
+                        </div>
+
+                    </div>
+                    <%}%>
+
+
+                </div>
+                <%if(curruser){%>
+                <div class="row">
+                    <div class="col">
+                        <form novalidate class="mt-3 mb-3 needs-validation" method="post"
+                            action="/listing/<%=hotel._id%>/review/add/">
+                            <h3>Leave a review</h3>
+                            <br>
+                            <label class="form-label" for="rating">Rating</label>
+                            <input name="review[rating]" type="range" min="0" max="5" class="form-range" step="1"
+                                value="0">
+                            <br>
+                            <label class="form-label" for="comments">Comments</label>
+                            <textarea required name="review[comment]" id="comment" class="form-control" rows="2"
+                                cols="20"></textarea>
+
+                            <div class="invalid-feedback">Please Comment!</div><br>
+                            <button class="btn btn-outline-dark" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <%}%>
+                <h3>Reviews</h3>
+                <%if(hotel.review.length==0){%>
+                    <p>be first one to rate <%=hotel.title%>
+                    </p>
+                    <%}%>
+                        <div class="row">
+                            <%for(let r in hotel.review){%>
+                                <div class="col-12 col-md-6">
+                                    <div class="card border-info mb-3" style="max-width: 18rem;">
+                                        <div class="card-body">
+                                            <div class="insameline"
+                                                style="display: flex;justify-content: space-between;">
+                                                <h4 class="card-title"><%=hotel.review[r].author.username%></h4>
+                                                <p class="card-text">⭐<%=hotel.review[r].rating%>/5</p>
+                                                <%if(curruser&&curruser._id.equals(hotel.review[r].author._id)){%>
+                                                <div class="nesteddiv">
+                                                    <i class="fa-solid fa-ellipsis-vertical dotbtn "></i>
+                                                    
+                                                    <form method="post"
+                                                        action="/listing/<%=hotel.id%>/review/<%=hotel.review[r]._id%>?_method=delete">
+                                                        <button class="btn btn-dark delete-btn delbtn"
+                                                            style="display:none;">Delete</button>
+                                                    </form>
+
+                                                </div>
+                                                <%}%>
+                                            </div>
+
+                                            <p class="card-text">
+                                                <%=hotel.review[r].comment%>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%}%>
+                        </div>
+
+
+
+            </div>
+        </div>
+    </body>
